@@ -1,15 +1,64 @@
-export function getAllNotes(req, res) {
-  res.status(200).send("15 notes")
+import Task from "../models/Tasks.js"
+
+export async function getAllTasks(_, res) {
+  try {
+    // created at -1 means the order of tasks is reversed (newest firsta)
+    const tasks = await Task.find().sort({createdAt:-1})
+    res.status(200).json(tasks)
+  } catch (error) {
+    console.error("Error in getAllTasks controller", error)
+    res.status(500).json({message:"server internal error"})
+  }
 }
 
-export function createNote(req, res) {
-  res.status(201).json({message:"post created successfully"})
+export async function getTaskById(req, res) {
+  try {
+    const task = await Task.findById(req.params.id)    
+    if(!task) return res.status(404).json({message:"task not found"})
+
+    res.status(201).json(task)
+  } catch (error) {
+    console.error("Error in getTaskById controller", error)
+    res.status(500).json({message:"server internal error"})    
+  }
 }
 
-export function updateNote(req, res) {
-  res.status(200).json({message:"post updated successfully"})
+export async function createTask(req, res) {
+  try {
+    const {title, content} = req.body
+
+    const task = new Task({title, content})
+    const savedTask = await task.save()
+
+    res.status(201).json(savedTask)
+  } catch (error) {
+    console.error("Error in createTask controller", error)
+    res.status(500).json({message:"server internal error"})
+  }
 }
 
-export function deleteNote(req, res) {
-  res.status(200).json({message:"post deleted successfully"})
+export async function updateTask(req, res) {
+  try {
+    const {title, content} = req.body
+
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, {title, content},{new:true})
+    if(!updatedTask) return res.status(404).json({message:"task not found"})
+
+    res.status(200).json(updatedTask)
+  } catch (error) {
+    console.error("Error in updateNote controller", error)
+    res.status(500).json({message:"server internal error"})    
+  }
+}
+
+export async function deleteTask(req, res) {
+  try {
+    const deletedNote = await Task.findByIdAndDelete(req.params.id)    
+    if(!deletedNote) return res.status(404).json({message:"task not found"})
+        
+    res.status(200).json({message:"task deleted successfully"})
+  } catch (error) {
+    console.error("Error in deleteTask controller", error)
+    res.status(500).json({message:"server internal error"})    
+  }
 }

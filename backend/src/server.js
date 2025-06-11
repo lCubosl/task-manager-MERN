@@ -8,10 +8,20 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5001
 
-connectDB()
+
+app.use(express.json())
+// for debugging middlewsare purposes
+app.use((req, res, next) => {
+  console.log(`req method is ${req.method} & req URL is ${req.url}`)
+  next()
+})
 
 app.use("/api/notes", notesRoutes)
 
-app.listen(PORT, () => {
-  console.log("Server started on PORT:", PORT)
+// reverses order of application. server only starts after connection to mongo is established
+// if connection fails, the app wont start
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log("Server started on PORT:", PORT)
+  })
 })

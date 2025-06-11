@@ -11,6 +11,7 @@ export default {
   },
   plugins: [daisyui],
   daisyui: {
-    themes: ["light", "dark", "cupcake", "emerald", "cmyk", "pastel"]
+    //themes: ["light", "dark", "cupcake", "emerald", "cmyk", "pastel", "black", "lofi", "sunset", "nord", "lemonade"]
+    themes: ["cmyk"],
   }
 }

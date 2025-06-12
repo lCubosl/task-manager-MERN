@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 
+import api from "../lib/axios"
+
 import Navbar from "../components/Navbar"
 import TaskCard from "../components/TaskCard"
-import api from "../lib/axios"
 import TasksNotFound from "../components/TasksNotFound"
 
 const HomePage = () => {
@@ -38,7 +39,7 @@ const HomePage = () => {
 
         {tasks.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tasks.map(task => (
+            {tasks.map((task) => (
               <div>
                 {/* component under components (formats each card) */}
                 <TaskCard key={task._id} task={task} setTasks={setTasks} />

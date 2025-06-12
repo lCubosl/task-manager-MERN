@@ -13,7 +13,7 @@ const TasksNotFound = () => {
         Create task
       </Link>
     </div>
-  );
-};
+  )
+}
 
 export default TasksNotFound

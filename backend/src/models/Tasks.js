@@ -12,6 +12,23 @@ const taskSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  category: {
+    type:String,
+    enum:["Personal","Work","Other"],
+    default:"Other",
+    required:true
+  },
+  priority: {
+    type:String,
+    enum:["LOW","MEDIUM","HIGH"],
+    default:"LOW",
+    required:true
+  },
+  completed: {
+    type:Boolean,
+    default:false,
+    required:true
+  }
   
 }, {timestamps:true})
 

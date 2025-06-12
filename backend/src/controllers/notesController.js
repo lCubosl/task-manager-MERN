@@ -25,9 +25,9 @@ export async function getTaskById(req, res) {
 
 export async function createTask(req, res) {
   try {
-    const {title, content} = req.body
+    const {title, content, category, priority, completed} = req.body
 
-    const task = new Task({title, content})
+    const task = new Task({title, content, category, priority, completed})
     const savedTask = await task.save()
 
     res.status(201).json(savedTask)
@@ -39,9 +39,10 @@ export async function createTask(req, res) {
 
 export async function updateTask(req, res) {
   try {
-    const {title, content} = req.body
+    const {title, content, category, priority, completed} = req.body
 
-    const updatedTask = await Task.findByIdAndUpdate(req.params.id, {title, content},{new:true})
+    // runValidators ensures category and priority only have names listed in the enum
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, {title, content, category, priority, completed},{new:true, runValidators:true})
     if(!updatedTask) return res.status(404).json({message:"task not found"})
 
     res.status(200).json(updatedTask)

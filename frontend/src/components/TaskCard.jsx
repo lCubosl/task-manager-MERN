@@ -68,12 +68,12 @@ const TaskCard = ({task, setTasks}) => {
         </div>
         <span className="text-sm font-bold">
           {task.completed ? (
-            <span className="flex items-center gap-1 text-green-500">
+            <span className="flex items-center gap-1 bg-green-500 text-base-100 p-2 rounded">
               COMPLETED
               <Check className="size-5" />
             </span>
           ) : (
-            <span className="text-base-content/50">TODO</span>
+            <span className="flex items-center gap-1 bg-base-content/30 text-base-100 p-2 rounded">TODO</span>
           )}
         </span>
       </div>
